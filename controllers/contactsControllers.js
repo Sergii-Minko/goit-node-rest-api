@@ -1,6 +1,6 @@
 import * as contactsService from "../services/contactsServices.js";
 
-import { HttpError, ctrlWrapper, validateBody } from "../helpers/index.js";
+import HttpError from "../helpers/HttpError.js";
 
 export const getAllContacts = async (req, res, next) => {
   try {
