@@ -1,3 +1,3 @@
-export const HttpError = require("./HttpError");
-export const ctrlWrapper = require("./ctrlWrapper");
-export const validateBody = require("./validateBody");
+export { default as HttpError } from "./HttpError.js";
+export { default as ctrlWrapper } from "./ctrlWrapper.js";
+export { default as validateBody } from "./validateBody.js";
