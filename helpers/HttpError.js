@@ -6,10 +6,10 @@ const messageList = {
   409: "Conflict",
 };
 
-const HttpError = (status, message = "Not Found") => {
+const HttpError = (status, message = messageList[status]) => {
   const error = new Error(message);
   error.status = status;
-  throw error;
+  return error;
 };
 
 export default HttpError;
