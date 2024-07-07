@@ -50,8 +50,21 @@ export const createContact = async (req, res, next) => {
 
 export const updateContact = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const result = await contactsService.updateById(id, req.body);
+    const { id: _id } = req.params;
+    const result = await contactsService.updateById({ _id }, req.body);
+    if (!result) {
+      throw HttpError(404, "Not Found");
+    }
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateFavoriteContact = async (req, res, next) => {
+  try {
+    const { id: _id } = req.params;
+    const result = await contactsService.updateStatusContact({ _id }, req.body);
     if (!result) {
       throw HttpError(404, "Not Found");
     }
