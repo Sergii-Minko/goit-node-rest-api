@@ -10,13 +10,12 @@ const initMongoDBConnection = async () => {
     const password = env("MONGODB_PASSWORD");
     const url = env("MONGODB_URL");
     const name = env("MONGODB_NAME");
-    const DB_HOST = env("DB_HOST");
-    // const DB_HOST = `mongodb+srv://${user}:${password}@${url}/${name}?retryWrites=true&w=majority&appName=ClusterGoit
-    // const DB_HOST = `mongodb+srv://${user}:${password}@${url}/${name}?retryWrites=true&w=majority&appName=ClusterGoit`;
+    const DB_HOST = `mongodb+srv://${user}:${password}@${url}/${name}?retryWrites=true&w=majority&appName=ClusterGoit`;
     await mongoose.connect(DB_HOST);
-    console.log("Succsessfully connection to MongoDB");
+    console.log("Database connection successful");
   } catch (error) {
     console.log(`Connection error ${error.message}`);
+    process.exit(1);
     throw error;
   }
 };
