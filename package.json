@@ -1,18 +1,30 @@
 {
   "name": "goit-node-rest-api",
   "type": "module",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./app.js",
-    "dev": "nodemon ./app.js"
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "@faker-js/faker": "^8.4.1",
+    "eslint": "^9.2.0",
+    "globals": "^15.1.0",
+    "nodemon": "^3.1.4",
+    "pino-pretty": "^11.2.1"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "joi": "^17.12.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "mongoose": "^8.4.4",
     "morgan": "^1.10.0",
-    "nanoid": "^5.0.7"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nanoid": "^5.0.7",
+    "pino-http": "^10.1.0"
   }
 }
