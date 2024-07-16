@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 import contactsRouter from "./routes/contactsRouter.js";
+import authRouter from "./routes/auth-router.js";
 import env from "./helpers/env.js";
 
 const startServer = () => {
@@ -12,6 +13,8 @@ const startServer = () => {
   app.use(morgan("tiny"));
   app.use(cors());
   app.use(express.json());
+
+  app.use("/api/users", authRouter);
 
   app.use("/api/contacts", contactsRouter);
 
