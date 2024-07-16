@@ -1,19 +1,30 @@
-import fs from "node:fs/promises";
 import path from "node:path";
-import { nanoid } from "nanoid";
 import Contact from "../db/models/contacts.js";
 
-const contactsPath = path.join(process.cwd(), "./db/contacts.json");
+export const listContacts = async (query = {}) => {
+  const { filter, fields, settings } = query;
+  const { page, limit } = settings;
+  const skip = (page - 1) * limit;
+  const data = await Contact.find(filter, fields, { skip, limit });
+  const total = await Contact.countDocuments(filter);
 
-export const listContacts = () => Contact.find();
+  return {
+    data,
+    total,
+  };
+};
 
-export const getContactById = (_id) => Contact.findOne({ _id });
+export const getContactById = (filter) => {
+  console.log(filter);
+  return Contact.findOne(filter);
+};
 
 export const addContact = (data) => Contact.create(data);
 
 export const removeContact = (filter) => Contact.findOneAndDelete(filter);
 
-export const updateById = (filter, data) => Contact.findOneAndUpdate(filter, data);
+export const updateById = (filter, data) =>
+  Contact.findOneAndUpdate(filter, data);
 
 export const updateStatusContact = (filter, data) =>
   Contact.findOneAndUpdate(filter, data);
