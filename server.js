@@ -9,10 +9,11 @@ import env from "./helpers/env.js";
 const startServer = () => {
   const app = express();
   const port = Number(env("PORT", 3000));
-
+  
   app.use(morgan("tiny"));
   app.use(cors());
   app.use(express.json());
+  app.use(express.static("public"));
 
   app.use("/api/users", authRouter);
 
