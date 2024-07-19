@@ -7,7 +7,18 @@ import HttpError from "../helpers/HttpError.js";
 
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
+import gravatar from "gravatar";
+import path from "path";
+
+import fs from "fs/promises";
+
+import processImage from "../helpers/imageEdit.js";
+
 const { JWT_SECRET } = process.env;
+
+const avatarsDir = path.join(process.cwd(), "./public/avatars");
+
+// const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
@@ -18,9 +29,12 @@ const signup = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
+  const avatarURL = gravatar.url(email);
+
   const newUser = await authServices.signup({
     ...req.body,
     password: hashPassword,
+    avatarURL,
   });
 
   res.status(201).json({
@@ -91,10 +105,29 @@ const subscriptionStatus = async (req, res) => {
   });
 };
 
+const updateAvatar = async (req, res) => {
+  const { _id } = req.user;
+  const { path: tempUpload, originalname } = req.file;
+  await processImage(tempUpload);
+  const filename = `${_id}_${originalname}`;
+  const resultUpload = path.join(avatarsDir, filename);
+  await fs.rename(tempUpload, resultUpload);
+  const avatarURL = path.join("avatars", filename);
+
+  const avatar = avatarURL;
+
+  await authServices.updateUser({ _id }, { avatar });
+
+  res.json({
+    avatarURL,
+  });
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
   subscriptionStatus: ctrlWrapper(subscriptionStatus),
+  updateAvatar: ctrlWrapper(updateAvatar),
 };
