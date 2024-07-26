@@ -13,6 +13,7 @@ import {
   authRegisterSchema,
   authLoginSchema,
   authSubscriptionSchema,
+  emailSchema,
 } from "../schemas/auth-schemas.js";
 
 const authRouter = Router();
@@ -49,5 +50,9 @@ authRouter.patch(
   upload.single("avatar"),
   authControllers.updateAvatar
 );
+
+authRouter.get("/verify/:verificationToken", authControllers.verifyEmail);
+
+authRouter.post("/verify", validateBody(emailSchema), authControllers.resendVerifyEmail);
 
 export default authRouter;

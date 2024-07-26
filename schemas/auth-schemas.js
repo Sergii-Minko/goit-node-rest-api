@@ -21,3 +21,8 @@ export const authSubscriptionSchema = Joi.object({
     .valid(...validSubscriptions)
     .required(),
 });
+export const emailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required().messages({
+    "any.required": "missing required field email",
+  }),
+});
